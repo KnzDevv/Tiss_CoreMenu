@@ -1,5 +1,8 @@
 ESX = exports["es_extended"]:getSharedObject()
 
+
+
+
 local check = false
 local slider = 0
 
@@ -17,6 +20,7 @@ local player, distance = ESX.Game.GetClosestPlayer()
 
 function main()
     tiss_menu.render(mainmenu, function()
+
     -- Bouton Boutique 
         addButton("💰 Boutique", { rightLabel = ">>>", description = "" }, {
             onSelected = function()
@@ -36,7 +40,20 @@ function main()
                 submenu2_options()
             end
         })
-
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "taxi" then
+            addButton("🚖 Taxi", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:Taxi")
+                end
+            })
+        end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "unicorn" then
+            addButton("🦩 Unicorn", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:Unicorn")
+                end
+            })
+        end
         -- Bouton Animation
         addButton("💃 Animation", { rightLabel = ">>>", description = "" }, {
             onSelected = function()
@@ -53,6 +70,22 @@ function main()
                 end
             })
         end
+        RegisterNetEvent('receivePlayerGroup')
+        AddEventHandler('receivePlayerGroup', function(group)
+        if group == "admin" then
+            addButton("💃 Administrateur Admin", { rightLabel = ">>>", description = "" }, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:OuvrirMenuAnim")
+                    tiss_menu.close(mainmenu.id) -- Fermeture du menu principal
+                end
+            })
+        elseif group == "user" then
+            addButton("💃 Administrateur", { rightLabel = "🔒", description = "" }, {
+                onSelected = function()
+                end
+            })   
+    end
+end)
         -- Gestion de la fermeture du menu
         onClosed(function()
             print("Menu fermé.")
@@ -163,3 +196,4 @@ RegisterCommand('tiss_menu', function()
 end)
 
 RegisterKeyMapping('tiss_menu', '', 'keyboard', 'F1')
+

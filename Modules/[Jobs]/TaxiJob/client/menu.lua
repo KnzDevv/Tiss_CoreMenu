@@ -18,7 +18,7 @@ function main_taxi()
     
     addButton("📢 Annonce", { rightLabel = ">>>", description = "" }, {
         onSelected = function()
-            sub_annonce()
+            sub_annonceTaxi()
         end
     })
     addButton("📜 Faire une Facture", { rightLabel = ">>>", description = "" }, {
@@ -42,7 +42,7 @@ function main_taxi()
 end
 
 
-function sub_annonce()
+function sub_annonceTaxi()
     tiss_menu.render(sub_taxijob1, function()
     
     addButton("🟢 Annonce - Ouvert", { rightLabel = ">>>", description = "" }, {
@@ -70,7 +70,22 @@ function sub_annonce()
 end
 
 
+local main_patron = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Menu Patron", itemsPerPage = 10 })
+local sub_patrongestion = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Gestion Personnelles", itemsPerPage = 10 })
 
+
+function main_patronstructure()
+    tiss_menu.render(main_patron, function()
+    addButton("🟢 Annonce - Ouvert", { rightLabel = ">>>", description = "" }, {
+        onSelected = function()
+            TriggerServerEvent('TissTaxiJob:annonce:ouvert')
+        end
+    })
+
+        onClosed(function()
+        end)
+    end)
+end
 
 RegisterCommand('taxijobmain', function()
     if ESX.PlayerData.job and ESX.PlayerData.job.name == "taxi" then
@@ -78,4 +93,7 @@ RegisterCommand('taxijobmain', function()
     end
 end)
 
-RegisterKeyMapping('taxijobmain', 'Ouvrir le Menu Taxi', 'keyboard', 'F6')
+RegisterNetEvent("TIssmey:Jobs:Taxi")
+AddEventHandler("Tissmey:Jobs:Taxi", function()
+    main_taxi()
+end)
