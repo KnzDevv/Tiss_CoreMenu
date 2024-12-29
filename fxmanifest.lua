@@ -20,12 +20,15 @@ server_script {
 }
 
 shared_scripts {
+    'Modules/[Utils]/Freecam/shared/*.lua',
+    'Modules/[Utils]/me/shared/config.lua',
     'Modules/[Utils]/MenuAdmin/config/permissions.lua',
     'Modules/[Utils]/MenuAdmin/config/config.lua',
     'Modules/[Utils]/MenuAdmin/config/logs.lua',
     'Modules/[Utils]/MenuAdmin/config/shared_functions.lua',
     'Modules/[Utils]/MenuAdmin/code/helper.lua',
-    '@es_extended/imports.lua'
+    '@es_extended/imports.lua',
+    'config/*.lua'
 }
 
 client_scripts {

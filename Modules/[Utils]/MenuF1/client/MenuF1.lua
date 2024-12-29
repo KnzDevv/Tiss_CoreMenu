@@ -1,22 +1,23 @@
 ESX = exports["es_extended"]:getSharedObject()
 
 
-
-
 local check = false
 local slider = 0
 
-local mainmenu = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "MENU PRINCIPAL", itemsPerPage = 10 })
+local mainmenu = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "MENU PRINCIPAL", itemsPerPage = 10 })
 ---- Portefeuille
-local submenu1_portefeuille = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Porte-Feuille", itemsPerPage = 10 })
-local submenu1_portefeuillecdi = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "CDI", itemsPerPage = 10 })
-local submenu1_portefeuillepdc = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Permis de Conduire", itemsPerPage = 10 })
+local submenu1_portefeuille = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Porte-Feuille", itemsPerPage = 10 })
+local submenu1_portefeuillecdi = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "CDI", itemsPerPage = 10 })
+local submenu1_portefeuillepdc = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Permis de Conduire", itemsPerPage = 10 })
 ---- Options Diverses 
-local submenu2_optionsdiverses = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Options Diverses", itemsPerPage = 10 })
+local submenu2_optionsdiverses = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Options Diverses", itemsPerPage = 10 })
 ---- Vehicule 
-local submenu3_vehicule1 = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Options Diverses", itemsPerPage = 10 })
+local submenu3_vehicule1 = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Options Diverses", itemsPerPage = 10 })
+---- Bypass 
+local submenu4_bypassmode = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Bypass Menu", itemsPerPage = 10 })
 --- Player
 local player, distance = ESX.Game.GetClosestPlayer()
+
 
 function main()
     tiss_menu.render(mainmenu, function()
@@ -54,6 +55,41 @@ function main()
                 end
             })
         end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "luxbar" then
+            addButton("🌟 Lux", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:Luxbar")
+                end
+            })
+        end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "police" then
+            addButton("🚔 Police", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:Police")
+                end
+            })
+        end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "bshotsud" then
+            addButton("🍔 B.Shot Sud", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:bshotsud")
+                end
+            })
+        end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "bshotnord" then
+            addButton("🍔 B.Shot Nord", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:bshotnord")
+                end
+            })
+        end
+        if ESX.PlayerData.job and ESX.PlayerData.job.name == "exoticnord" then
+            addButton("⚓ Exotic Boat", { rightLabel = ">>>", description =""}, {
+                onSelected = function()
+                    TriggerEvent("Tissmey:Jobs:exoticnord")
+                end
+            })
+        end
         -- Bouton Animation
         addButton("💃 Animation", { rightLabel = ">>>", description = "" }, {
             onSelected = function()
@@ -70,23 +106,11 @@ function main()
                 end
             })
         end
-        RegisterNetEvent('receivePlayerGroup')
-        AddEventHandler('receivePlayerGroup', function(group)
-        if group == "admin" then
-            addButton("💃 Administrateur Admin", { rightLabel = ">>>", description = "" }, {
+        addButton("⛔ Administration", { rightLabel = ">>>", description = "" }, {
                 onSelected = function()
-                    TriggerEvent("Tissmey:OuvrirMenuAnim")
-                    tiss_menu.close(mainmenu.id) -- Fermeture du menu principal
+                    main_adminmod()
                 end
             })
-        elseif group == "user" then
-            addButton("💃 Administrateur", { rightLabel = "🔒", description = "" }, {
-                onSelected = function()
-                end
-            })   
-    end
-end)
-        -- Gestion de la fermeture du menu
         onClosed(function()
             print("Menu fermé.")
         end)

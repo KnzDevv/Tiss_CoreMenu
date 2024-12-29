@@ -9,8 +9,8 @@ local player, distance = ESX.Game.GetClosestPlayer()
 local check = false
 local slider = 0
 
-local main_taxijob = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Taxi", itemsPerPage = 10 })
-local sub_taxijob1 = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Annonce Taxi", itemsPerPage = 10 })
+local main_taxijob = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Taxi", itemsPerPage = 10 })
+local sub_taxijob1 = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Annonce Taxi", itemsPerPage = 10 })
 print("Ouuuuuu")
 
 function main_taxi()
@@ -27,7 +27,8 @@ function main_taxi()
             local reason = exports["input"]:ShowSync("Entrez une raison", true, 100, "small_text")
             if distance ~= -1 and distance <= 3.0 then
             TriggerServerEvent("okokBilling:CreateCustomInvoice", GetPlayerServerId(PlayerId()), price, reason, "Taxi", "taxi", "Taxi")
-            else
+                print("effectué")
+        else
             ESX.ShowNotification('No players nearby')
             end
         end
@@ -70,8 +71,8 @@ function sub_annonceTaxi()
 end
 
 
-local main_patron = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Menu Patron", itemsPerPage = 10 })
-local sub_patrongestion = tiss_menu.create("fb", "Melrose FA", { subtitle = "", description = "Gestion Personnelles", itemsPerPage = 10 })
+local main_patron = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Menu Patron", itemsPerPage = 10 })
+local sub_patrongestion = tiss_menu.create("fb", Config.ServerName, { subtitle = "", description = "Gestion Personnelles", itemsPerPage = 10 })
 
 
 function main_patronstructure()
